@@ -1,0 +1,138 @@
+<div class="spinner" ng-show="loading"/>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{title}} </h3>
+  </div>
+  <div class="panel-body" style="height:900px">  
+    <div ng-show="movies.name" class="ng-hide">
+      <form role="form" name="frmUpdateMovie" novalidate ng-submit="updateMovie()">
+        <div class="col-lg-6">      
+          <div class="form-group">
+            <label for="name">Name:</label>   
+            <input type="text" ng-model="movies.name" class="form-control input-normal" required>     
+          </div>
+          <div class="form-group">
+            <label for="director">Director:</label>   
+            <input type="text" ng-model="movies.director" class="form-control input-normal" required>     
+          </div>
+          <div class="form-group">
+            <label for="stars">Stars:</label>   
+            <textarea type="text" ng-model="movies.stars" placeholder="Stars with separated by comma" class="form-control input-normal" required/>      
+          </div>
+         
+      </div>
+      <div class="col-lg-6">  
+          <div class="form-group">
+            <label for="ssdb_score">SSDB Score:</label>   
+            <input type="number" ng-model="movies.ssdb_score" min="0" max="10" class="form-control input-normal">      
+          </div>
+          <div class="form-group">
+            <label for="popularity">Popularity:</label>   
+            <input type="number" ng-model="movies.popularity" min="0" max="10" class="form-control input-normal">      
+          </div>
+          <div class="form-group">
+            <label for="discription">Discription:</label>   
+            <textarea type="text" ng-model="movies.description" class="form-control input-normal" required/>      
+          </div>  
+          <div class="form-group">
+            <label for="genre">Genre:</label>
+            <select class="multiselect form-control" data-placeholder="Select Genre" 
+                    ng-model="genreSelections" ng-options="genre.id as genre.genre for genre in genreListDatas"
+                    multiple="multiple" multiselect-dropdown required> 
+                </select>
+              
+                </div>              
+          <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-success pull-right" ng-disabled="!frmUpdateMovie.$valid">
+            </div>
+        </div>        
+      </form>
+    </div>
+
+    <div ng-show="!movies.name">
+      <div ng-show="{{userType}}">
+        <span>
+            <p class="text-right">        
+              <a ui-sref="newMovie" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus"></span>Add Movie</a>
+              <a ng-click="generList()" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-th-list"></span>Gener List</a>
+            </p>
+        </span>
+      </div>
+      <div>
+          <span>
+            <p class="text-center">              
+                <input type=text ng-model='query' placeholder="Search here..."><span class="glyphicon glyphicon-search"></span></p>
+          </span>
+      </div>
+  </div>
+
+    <div style="margin:30px;" ng-show="!movies.name">
+      <div ng-repeat="movie in moviesList | filter:query| orderBy:'-id'">
+        <h3><a href="" ng-click="getMovieData(movie)" data-toggle="collapse" data-target="#movie_details{{movie.id}}">{{ movie.name }}</a></h3>
+        <div class="collapse" id="movie_details{{movie.id}}" onmouseover="this.style.backgroundColor='#f5f5f5';" onmouseout="this.style.backgroundColor='#fff';">
+          <dl> <!-- definition list-->
+            <div class="row">
+              <div class="col-xs-12 col-md-8">
+                <dd class="outline" itemprop="description">
+                    {{ movie.description }}                     
+                </dd>
+                 <dt>Director</dt> <!-- definition term -->
+                 <dd>
+                    <span itemprop="director" itemscope="" itemtype="http://schema.org/Person">
+                          <span itemprop="name">                      
+                              <a> {{ movie.director }} </a>
+                          </span>
+                      </span>
+                 </dd>
+                 <dt>Stars</dt>
+                 <dd>
+                    <span itemprop="actors" itemscope="" itemtype="http://schema.org/Person">
+                      <span itemprop="name">
+                        <a> {{ movie.stars }}</a>                    
+                      </span>
+                    </span>
+                 </dd>
+                 <dt>SSDB Score</dt>
+                 <dd>
+                    <span itemprop="ssdb_score" itemscope="" itemtype="http://schema.org/Person">
+                      <span itemprop="name">
+                        <a> {{ movie.ssdb_score }}</a>                    
+                      </span>
+                    </span>
+                  </dd>
+                  <dt>SSDB Popularity</dt>
+                  <dd>
+                      <span itemprop="popularity" itemscope="" itemtype="http://schema.org/Person">
+                        <span itemprop="name">
+                          <a> {{ movie.popularity }}</a>                      
+                        </span>
+                      </span>
+                  </dd>
+                  <dt>Genre</dt>
+                  <dd>
+                      <span itemprop="genre" itemscope="" itemtype="http://schema.org/Person" ng-repeat="mgenre in movie.genre">
+                        <span itemprop="name">                      
+                          <a>{{ genrefilter[mgenre] }} {{$last ? '': ','}}</a>                          
+                        </span>
+                      </span>
+                  </dd>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                  <span ng-show="{{userType}}">
+                    <div class="btn-group" ng-show="userType">
+                        <a href="" ng-click="showMovieData(movie)" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span>Edit</a>
+                        
+                        <a href="" ng-click="removeMovie(movie)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Delete</a>
+                    </div>                    
+                  </span>
+                </div>
+              </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+            

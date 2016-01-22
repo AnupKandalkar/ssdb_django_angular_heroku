@@ -1,0 +1,41 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/*
+input.ng-invalid.ng-touched {
+	background-color: #FA787E;
+}
+
+input.ng-valid.ng-touched {
+	background-color: #78FA89;
+}*/
+
+.ng-invalid-required.ng-touched {
+	background-color: #FA787E;
+}
+
+
+.spinner{
+ background-image: url("../images/ajax-loader.gif");
+ background-repeat: no-repeat;
+ margin: auto;
+   position: absolute;
+   top: 40%; 
+   left: 40%;
+   bottom: 0; 
+   right: 0;
+   z-index: 1;
+   /*display: none;  */
+}
+
+.panel-primary > .panel-heading {
+    background-image: linear-gradient(to bottom, #3D5C77 0px, #47372F 100%);
+    background-repeat: repeat-x;
+  }
+
